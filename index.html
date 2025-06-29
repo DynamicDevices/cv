@@ -380,15 +380,153 @@
                 display: none !important;
             }
         }
+
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 0.25in;
+                font-size: 8pt;
+            }
+
+            .cv-container {
+                margin: 10px auto;
+                padding: 0.25in;
+                border-radius: 4px;
+            }
+
+            /* Header adjustments for mobile */
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16pt;
+                padding: 12pt 0;
+            }
+
+            .header-left {
+                text-align: center;
+            }
+
+            .name {
+                font-size: 20pt;
+            }
+
+            .tagline {
+                font-size: 11pt;
+            }
+
+            .contact-info {
+                font-size: 8pt;
+                text-align: center;
+            }
+
+            /* Stats section - horizontal layout on mobile */
+            .stats {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8pt;
+                text-align: center;
+                min-width: unset;
+            }
+
+            .stat {
+                font-size: 7pt;
+                padding: 6pt 4pt;
+                text-align: center;
+            }
+
+            .stat-number {
+                display: block;
+                font-size: 9pt;
+                margin-bottom: 2pt;
+            }
+
+            /* Experience items */
+            .exp-header {
+                flex-direction: column;
+                gap: 6pt;
+            }
+
+            .duration {
+                align-self: flex-start;
+                font-size: 7pt;
+            }
+
+            /* Achievements grid */
+            .achievements {
+                grid-template-columns: 1fr;
+                gap: 8pt;
+            }
+
+            /* Tech grid */
+            .tech-grid {
+                grid-template-columns: 1fr;
+                gap: 8pt;
+            }
+
+            /* Project headers */
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4pt;
+            }
+
+            /* Print button positioning on mobile */
+            .print-button {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                font-size: 7pt;
+                padding: 6px 10px;
+            }
+        }
+
+        /* Extra small screens */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 0.15in;
+                font-size: 7pt;
+            }
+
+            .cv-container {
+                padding: 0.15in;
+            }
+
+            .name {
+                font-size: 18pt;
+            }
+
+            .tagline {
+                font-size: 10pt;
+            }
+
+            .contact-info {
+                font-size: 7pt;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 6pt;
+            }
+
+            .stat {
+                font-size: 6pt;
+                padding: 4pt;
+            }
+
+            .stat-number {
+                font-size: 8pt;
+            }
+        }
+
         @media print {
             body {
                 font-size: 8pt;
             }
-            
+
             .achievements {
                 grid-template-columns: 1fr;
             }
-            
+
             .tech-grid {
                 grid-template-columns: repeat(3, 1fr);
             }

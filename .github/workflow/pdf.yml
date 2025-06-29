@@ -1,0 +1,166 @@
+name: Generate PDFs from HTML Documents
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '*.html'
+      - '.github/workflows/generate-pdfs.yml'
+  workflow_dispatch:
+
+jobs:
+  generate-pdfs:
+    runs-on: ubuntu-latest
+    
+    # Skip if commit message contains [skip-pdf] to prevent infinite loops
+    if: "!contains(github.event.head_commit.message, '[skip-pdf]')"
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Get changed HTML files
+      id: changed-files
+      uses: tj-actions/changed-files@v44
+      with:
+        files: |
+          *.html
+        files_ignore: |
+          node_modules/**
+          .git/**
+    
+    - name: Setup Node.js
+      if: steps.changed-files.outputs.any_changed == 'true'
+      uses: actions/setup-node@v4
+      with:
+        node-js-version: '20'
+    
+    - name: Install Puppeteer
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: |
+        npm init -y
+        npm install puppeteer
+    
+    - name: Generate PDFs
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: |
+        # Create PDF generation script
+        cat > generate-pdfs.js << 'EOF'
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        const path = require('path');
+        
+        async function generatePDF(htmlFile) {
+          const browser = await puppeteer.launch({
+            headless: 'new',
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+          });
+          
+          try {
+            const page = await browser.newPage();
+            
+            // Read HTML file
+            const htmlContent = fs.readFileSync(htmlFile, 'utf8');
+            const htmlPath = path.resolve(htmlFile);
+            
+            // Set content and wait for any dynamic content to load
+            await page.setContent(htmlContent, { 
+              waitUntil: 'networkidle0',
+              timeout: 30000 
+            });
+            
+            // Generate PDF with high quality settings
+            const pdfPath = htmlFile.replace('.html', '.pdf');
+            await page.pdf({
+              path: pdfPath,
+              format: 'A4',
+              margin: {
+                top: '0.5in',
+                right: '0.5in',
+                bottom: '0.5in',
+                left: '0.5in'
+              },
+              printBackground: true,
+              preferCSSPageSize: true
+            });
+            
+            console.log(`Generated PDF: ${pdfPath}`);
+            return pdfPath;
+          } finally {
+            await browser.close();
+          }
+        }
+        
+        async function main() {
+          const args = process.argv.slice(2);
+          const generatedPDFs = [];
+          
+          for (const htmlFile of args) {
+            if (fs.existsSync(htmlFile)) {
+              try {
+                const pdfPath = await generatePDF(htmlFile);
+                generatedPDFs.push(pdfPath);
+              } catch (error) {
+                console.error(`Error generating PDF for ${htmlFile}:`, error);
+              }
+            }
+          }
+          
+          // Output generated PDFs for GitHub Actions
+          if (generatedPDFs.length > 0) {
+            console.log('GENERATED_PDFS=' + generatedPDFs.join(' '));
+          }
+        }
+        
+        main().catch(console.error);
+        EOF
+        
+        # Run PDF generation for changed HTML files
+        echo "Changed HTML files: ${{ steps.changed-files.outputs.all_changed_files }}"
+        node generate-pdfs.js ${{ steps.changed-files.outputs.all_changed_files }}
+    
+    - name: Configure Git
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+    
+    - name: Check for PDF changes
+      if: steps.changed-files.outputs.any_changed == 'true'
+      id: pdf-changes
+      run: |
+        # Check if any PDFs were generated or changed
+        if git diff --quiet HEAD -- '*.pdf' && git ls-files --others --exclude-standard '*.pdf' | grep -q .; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+        elif ! git diff --quiet HEAD -- '*.pdf'; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Commit and push PDFs
+      if: steps.changed-files.outputs.any_changed == 'true' && steps.pdf-changes.outputs.changes == 'true'
+      run: |
+        # Add all PDF files
+        git add *.pdf
+        
+        # Commit with [skip-pdf] to prevent triggering this workflow again
+        git commit -m "docs: auto-generate PDFs from HTML documents [skip-pdf]
+        
+        Generated PDFs for: ${{ steps.changed-files.outputs.all_changed_files }}
+        
+        Co-authored-by: GitHub Action <action@github.com>"
+        
+        # Push changes
+        git push
+    
+    - name: Upload PDFs as artifacts
+      if: steps.changed-files.outputs.any_changed == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: generated-pdfs
+        path: '*.pdf'
+        retention-days: 30

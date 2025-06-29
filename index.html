@@ -24,7 +24,17 @@
             max-width: 8.5in;
             margin: 0 auto;
             padding: 0.5in;
+            background: #f8f9fa;
+        }
+        
+        /* Container for web display */
+        .cv-container {
             background: #ffffff;
+            border: 1px solid #d1d5da;
+            border-radius: 8px;
+            padding: 0.5in;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
         }
         
         /* Header */
@@ -387,6 +397,8 @@
     <button class="print-button" onclick="printToPDF()" title="Download as PDF">
         ⬇ PDF
     </button>
+    
+    <div class="cv-container">
     <div class="header">
         <div class="header-left">
             <div class="name">Alex Lennon</div>
@@ -404,6 +416,7 @@
             <div class="stat"><span class="stat-number">£2.2M</span> Programme Value</div>
             <div class="stat"><span class="stat-number">5+</span> Mentoring Roles</div>
         </div>
+    </div>
     </div>
 
     <div class="section">
@@ -487,58 +500,71 @@
             <span>Technical Expertise</span>
         </div>
         
-        <!-- Core Technologies -->
-        <div style="margin-bottom: 16pt;">
-            <h4 style="font-size: 10pt; font-weight: 600; color: #24292e; margin-bottom: 8pt;">Core Technologies</h4>
-            <div style="display: flex; flex-wrap: wrap; gap: 6pt; margin-bottom: 12pt;">
-                <span class="tech-tag">Linux Kernel Development</span>
-                <span class="tech-tag">Embedded Systems Architecture</span>
-                <span class="tech-tag">IoT Platform Development</span>
-                <span class="tech-tag">Yocto Project</span>
-                <span class="tech-tag">OpenEmbedded</span>
-                <span class="tech-tag">Device Driver Development</span>
-                <span class="tech-tag">Board Bring-up</span>
-                <span class="tech-tag">Real-time Systems</span>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20pt;">
+            <!-- Left Column -->
+            <div>
+                <div style="margin-bottom: 16pt;">
+                    <h4 style="font-size: 10pt; font-weight: 600; color: #0366d6; margin-bottom: 8pt; display: flex; align-items: center; gap: 6pt;">
+                        <span style="width: 8pt; height: 8pt; background: #0366d6; border-radius: 50%; display: inline-block;"></span>
+                        Embedded Systems & Linux
+                    </h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Linux Kernel Development</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Yocto Project & OpenEmbedded</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Device Driver Development</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Board Bring-up & BSP</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Real-time Systems</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Embedded Architecture</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-bottom: 16pt;">
+                    <h4 style="font-size: 10pt; font-weight: 600; color: #0366d6; margin-bottom: 8pt; display: flex; align-items: center; gap: 6pt;">
+                        <span style="width: 8pt; height: 8pt; background: #0366d6; border-radius: 50%; display: inline-block;"></span>
+                        Security & Compliance
+                    </h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• CHERI Memory Safety</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• ARM Morello Integration</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• CRA/CE-RED Compliance</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Cryptographic Security</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Secure Boot & PKI</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• DevSecOps Practices</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        
-        <!-- Security & Compliance -->
-        <div style="margin-bottom: 16pt;">
-            <h4 style="font-size: 10pt; font-weight: 600; color: #24292e; margin-bottom: 8pt;">Security & Regulatory Compliance</h4>
-            <div style="display: flex; flex-wrap: wrap; gap: 6pt; margin-bottom: 12pt;">
-                <span class="tech-tag">CHERI Memory Safety</span>
-                <span class="tech-tag">ARM Morello</span>
-                <span class="tech-tag">CRA/CE-RED Compliance</span>
-                <span class="tech-tag">Cryptographic Security</span>
-                <span class="tech-tag">DevSecOps</span>
-                <span class="tech-tag">Secure Boot</span>
-                <span class="tech-tag">PKI Integration</span>
-            </div>
-        </div>
-        
-        <!-- Emerging Technologies -->
-        <div style="margin-bottom: 16pt;">
-            <h4 style="font-size: 10pt; font-weight: 600; color: #24292e; margin-bottom: 8pt;">Emerging Technologies</h4>
-            <div style="display: flex; flex-wrap: wrap; gap: 6pt; margin-bottom: 12pt;">
-                <span class="tech-tag">5G IoT Applications</span>
-                <span class="tech-tag">Ultra-wideband Positioning</span>
-                <span class="tech-tag">AR/VR Development</span>
-                <span class="tech-tag">Edge Computing</span>
-                <span class="tech-tag">Machine Learning Integration</span>
-                <span class="tech-tag">Space Technology</span>
-            </div>
-        </div>
-        
-        <!-- Development & Tools -->
-        <div>
-            <h4 style="font-size: 10pt; font-weight: 600; color: #24292e; margin-bottom: 8pt;">Development & Leadership</h4>
-            <div style="display: flex; flex-wrap: wrap; gap: 6pt;">
-                <span class="tech-tag">Open Source Governance</span>
-                <span class="tech-tag">AI-Assisted Development</span>
-                <span class="tech-tag">Strategic Partnership Development</span>
-                <span class="tech-tag">Technical Team Leadership</span>
-                <span class="tech-tag">Product Architecture</span>
-                <span class="tech-tag">Government Relations</span>
+            
+            <!-- Right Column -->
+            <div>
+                <div style="margin-bottom: 16pt;">
+                    <h4 style="font-size: 10pt; font-weight: 600; color: #0366d6; margin-bottom: 8pt; display: flex; align-items: center; gap: 6pt;">
+                        <span style="width: 8pt; height: 8pt; background: #0366d6; border-radius: 50%; display: inline-block;"></span>
+                        IoT & Emerging Technologies
+                    </h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• IoT Platform Development</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• 5G IoT Applications</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Ultra-wideband Positioning</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• AR/VR Development</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Edge Computing</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Space Technology</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-bottom: 16pt;">
+                    <h4 style="font-size: 10pt; font-weight: 600; color: #0366d6; margin-bottom: 8pt; display: flex; align-items: center; gap: 6pt;">
+                        <span style="width: 8pt; height: 8pt; background: #0366d6; border-radius: 50%; display: inline-block;"></span>
+                        Leadership & Strategy
+                    </h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Open Source Governance</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Strategic Partnerships</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Technical Team Leadership</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Product Architecture</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• Government Relations</li>
+                        <li style="padding: 2pt 0; font-size: 9pt; color: #24292e;">• AI-Assisted Development</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -651,11 +677,19 @@
             </ul>
         </div>
         
-        <div style="font-size: 9pt; line-height: 1.4; margin-top: 12pt; padding: 8pt; background: #f6f8fa; border-radius: 4pt;">
-            <strong>Additional Partnerships:</strong><br>
-            <strong>Studio School Liverpool UTC</strong> — Industry Partner & Work Placement Provider<br>
-            <strong>OpenEmbedded Organization</strong> — Governance Member<br>
-            <strong>British Computer Society</strong> — TEALs Programme Volunteer
+        <div style="margin-top: 12pt; padding: 12pt; background: #f6f8fa; border-radius: 4pt; border-left: 3pt solid #0366d6;">
+            <h4 style="font-size: 9pt; font-weight: 600; color: #24292e; margin-bottom: 8pt;">Additional Partnerships</h4>
+            <div style="display: grid; gap: 4pt;">
+                <div style="font-size: 8pt; color: #24292e;">
+                    <strong>Studio School Liverpool UTC</strong> — Industry Partner & Work Placement Provider
+                </div>
+                <div style="font-size: 8pt; color: #24292e;">
+                    <strong>OpenEmbedded Organization</strong> — Governance Member
+                </div>
+                <div style="font-size: 8pt; color: #24292e;">
+                    <strong>British Computer Society</strong> — TEALs Programme Volunteer
+                </div>
+            </div>
         </div>
     </div>
 

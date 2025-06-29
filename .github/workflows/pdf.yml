@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
       - '*.html'
-      - '.github/workflows/generate-pdfs.yml'
+      - '.github/workflows/pdf.yml'  # Fixed: Changed from generate-pdfs.yml to pdf.yml
   workflow_dispatch:
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
       if: steps.changed-files.outputs.any_changed == 'true'
       uses: actions/setup-node@v4
       with:
-        node-js-version: '20'
+        node-version: '20'  # Fixed: Changed from node-js-version to node-version
     
     - name: Install Puppeteer
       if: steps.changed-files.outputs.any_changed == 'true'
@@ -133,7 +133,7 @@ jobs:
       id: pdf-changes
       run: |
         # Check if any PDFs were generated or changed
-        if git diff --quiet HEAD -- '*.pdf' && git ls-files --others --exclude-standard '*.pdf' | grep -q .; then
+        if git ls-files --others --exclude-standard '*.pdf' | grep -q .; then
           echo "changes=true" >> $GITHUB_OUTPUT
         elif ! git diff --quiet HEAD -- '*.pdf'; then
           echo "changes=true" >> $GITHUB_OUTPUT
